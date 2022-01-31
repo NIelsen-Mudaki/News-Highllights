@@ -1,1 +1,14 @@
-news_api = '8bfbc02859464b878919b033269f6b35'
+class Config:
+    
+    pass
+
+
+
+class ProdConfig(Config):
+    
+    pass
+
+
+class DevConfig(Config):
+    
+    DEBUG = True
