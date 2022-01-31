@@ -1,4 +1,6 @@
 class Config:
+
+    news_api_base_url ='https://newsapi.org/v2/top-headlines?country=us&apiKey={}'
     
     pass
 
