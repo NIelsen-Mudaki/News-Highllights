@@ -1,17 +1,20 @@
 from flask import render_template
-from app import app
-from ..requests import get_news
+from . import main
+from ..requests import get_source
 
 # Views
-@app.route('/')
+@main.route('/')
 def index():
+    '''
+        Root function with the home page
+    '''
 
-    top_headlines = get_news('headlines')
+    source = get_source()
 
-    return render_template('index.html', headlines = top_headlines)
+    return render_template('index.html', sources=source)
 
 
-@app.route('/news/<int:news_id>')
+@main.route('/news/<int:news_id>')
 def news(news_id):
     
 
