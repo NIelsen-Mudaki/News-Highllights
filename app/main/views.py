@@ -1,6 +1,6 @@
 from flask import render_template
 from app import app
-from .requests import get_news
+from ..requests import get_news
 
 # Views
 @app.route('/')
