@@ -1,4 +1,4 @@
-from .models import NewsSource
+from .models import NewsSource, News
 import urllib.request,json
 
 def configure_request(app):
@@ -41,3 +41,37 @@ def process_results(source_list):
             source_results.append(source_object)
 
     return source_results
+
+def news_source(id):
+    news_source_url = 'https://newsapi.org/v2/top-headlines?sources={}&apiKey={}'.format(id,api_key)
+    print(news_source_url)
+    with urllib.request.urlopen(news_source_url) as url:
+        news_source_data = url.read()
+        news_source_response = json.loads(news_source_data)
+
+        news_source_results = None
+
+        if news_source_response['articles']:
+            news_source_list = news_source_response['articles']
+            news_source_results = process_news_results(news_source_list)
+    
+    return news_source_results
+
+def process_news_results(news):
+    '''
+    function that processes the json files of articles from the api key
+    '''
+    news_source_results = []
+    for article in news:
+        author = article.get('author')
+        description = article.get('description')
+        time = article.get('publishedAt')
+        url = article.get('urlToImage')
+        image = article.get('url')
+        title = article.get ('title')
+
+        if url:
+            news_objects = News(author,description,time,image,url,title)
+            news_source_results.append(news_objects)
+
+    return news_source_results
