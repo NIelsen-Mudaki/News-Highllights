@@ -1,5 +1,7 @@
 class News:
-    
+    '''
+        Class that defines a news object
+    '''
 
     def __init__(self, author, title, description, url, urlToImage, publishedAt):
         
