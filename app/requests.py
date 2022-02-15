@@ -1,4 +1,4 @@
-from .models import NewsSource, News
+from .models import Category, NewsSource
 import urllib.request,json
 
 def configure_request(app):
@@ -42,26 +42,27 @@ def process_results(source_list):
 
     return source_results
 
-def news_source(id):
-    news_source_url = 'https://newsapi.org/v2/top-headlines?sources={}&apiKey={}'.format(id,api_key)
-    print(news_source_url)
-    with urllib.request.urlopen(news_source_url) as url:
-        news_source_data = url.read()
-        news_source_response = json.loads(news_source_data)
+def article_source(id):
+    article_source_url = 'https://newsapi.org/v2/top-headlines?sources={}&apiKey={}'.format(id,api_key)
+    print(article_source_url)
+    with urllib.request.urlopen(article_source_url) as url:
+        article_source_data = url.read()
+        article_source_response = json.loads(article_source_data)
 
-        news_source_results = None
+        article_source_results = None
 
-        if news_source_response['articles']:
-            news_source_list = news_source_response['articles']
-            news_source_results = process_news_results(news_source_list)
-    
-    return news_source_results
+        if article_source_response['articles']:
+            article_source_list = article_source_response['articles']
+            article_source_results = process_news_results(article_source_list)
+
+
+    return article_source_results
 
 def process_news_results(news):
     '''
     function that processes the json files of articles from the api key
     '''
-    news_source_results = []
+    article_source_results = []
     for article in news:
         author = article.get('author')
         description = article.get('description')
@@ -71,10 +72,10 @@ def process_news_results(news):
         title = article.get ('title')
 
         if url:
-            news_objects = News(author,description,time,image,url,title)
-            news_source_results.append(news_objects)
+            article_objects = Category(author,description,time,image,url,title)
+            article_source_results.append(article_objects)
 
-    return news_source_results
+    return article_source_results
 
 def get_category(cat_name):
     '''
@@ -84,15 +85,15 @@ def get_category(cat_name):
     print(get_category_url)
     with urllib.request.urlopen(get_category_url) as url:
         get_category_data = url.read()
-        get_cartegory_response = json.loads(get_category_data)
+        get_category_response = json.loads(get_category_data)
 
-        get_cartegory_results = None
+        get_category_results = None
 
-        if get_cartegory_response['articles']:
-            get_cartegory_list = get_cartegory_response['articles']
-            get_cartegory_results = process_news_results(get_cartegory_list)
+        if get_category_response['articles']:
+            get_category_list = get_category_response['articles']
+            get_category_results = process_news_results(get_category_list)
 
-    return get_cartegory_results
+    return get_category_results
 
 def get_headlines():
     '''

@@ -1,0 +1,13 @@
+.main {
+    flex: 1 1 0;
+    display: flex;
+}
+.col-9 {
+  height: 60vh; /* NEW */
+}
+.container-fluid {
+  display: flex;
+}
+#navbarText{
+  list-style: none;
+}
